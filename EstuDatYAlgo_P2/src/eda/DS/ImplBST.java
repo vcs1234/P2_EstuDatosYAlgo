@@ -53,6 +53,7 @@ public class ImplBST<E extends Comparable<E>> implements arbol<E> {
 
 	@Override
 	public void add(Comparable x) {
+		
 		// TODO Auto-generated method stub
 		
 	}
