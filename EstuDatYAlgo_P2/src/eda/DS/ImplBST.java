@@ -2,43 +2,53 @@ package eda.DS;
 
 import java.nio.channels.Pipe;
 import java.util.Iterator;
+import java.util.Stack;
 
-import eda.ADT.BST.arbol;;
+import eda.ADT.BST.arbol;
+import eda.EXCEPTIONS.ElementoNoEncontrado;;
 
-public class ImplBST implements arbol{
+public class ImplBST<E extends Comparable<E>> implements arbol<E> {
+
 	private Nodo raiz;
 	
 	public class BSTiterator implements Iterator<Nodo<E>>{
 		private Nodo<E> current = raiz;
-		private Pile<Nodo<E>> pila;;		
+		private Stack<Nodo<E>> pila = new Stack<>();		
 		
-		while( current.izq != null) {
-			pila.push(current);
-			current = current.izq; 
+		public BSTiterator() { //Constructor o inicalizador del iterador.
+			while (current != null) {
+		        pila.push(current);
+		        current = current.izq;
+		    }
 		}
+
 		
 		
 		
 
 		@Override
 		public boolean hasNext() {
-			return current.next() != null;
+			return next() != null;
 		}
 
 		@Override
 		public Nodo<E> next() {
-			Nodo<E> aux;
-			pila.pop();
-			return null;
-		}
+	        Nodo<E> nodo = pila.pop();
+	        Nodo<E> temp = nodo.der;
+	        while (temp != null) {
+	            pila.push(temp);
+	            temp = temp.izq;
+	        }
+	        return nodo;
+	    }
 		
 		
 	}
 
+	
 	@Override
-	public Iterator iterator() {
-		// TODO Auto-generated method stub
-		return null;
+	public Iterator<Nodo<E>> iterator() {
+	    return new BSTiterator();
 	}
 
 	@Override
@@ -65,7 +75,7 @@ public class ImplBST implements arbol{
 	}
 
 	@Override
-	public Nodo serarch(Comparable x) {
+	public Nodo<E> search(E x) throws ElementoNoEncontrado {
 		// TODO Auto-generated method stub
 		return null;
 	}
