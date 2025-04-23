@@ -2,14 +2,19 @@ package eda.DS;
 
 import java.nio.channels.Pipe;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Stack;
 
 import eda.ADT.BST.arbol;
-import eda.EXCEPTIONS.ElementoNoEncontrado;;
 
 public class ImplBST<E extends Comparable<E>> implements arbol<E> {
 
-	private Nodo raiz;
+	private Nodo<E> raiz;
+	
+	@Override
+	public Iterator<Nodo<E>> iterator() {
+	    return new BSTiterator();
+	}
 	
 	public class BSTiterator implements Iterator<Nodo<E>>{
 		private Nodo<E> current = raiz;
@@ -22,7 +27,9 @@ public class ImplBST<E extends Comparable<E>> implements arbol<E> {
 		    }
 		}
 
-		
+		public Nodo<E> getCurrent(){
+			return current;
+		}
 		
 		
 
@@ -35,6 +42,11 @@ public class ImplBST<E extends Comparable<E>> implements arbol<E> {
 		public Nodo<E> next() {
 	        Nodo<E> nodo = pila.pop();
 	        Nodo<E> temp = nodo.der;
+	        if(hasNext()== false){
+				
+				throw new NoSuchElementException("NO HAY MÁS ELEMENTOS");
+				//return null; Innecesario porque tenemos la excepción
+			}
 	        while (temp != null) {
 	            pila.push(temp);
 	            temp = temp.izq;
@@ -46,10 +58,7 @@ public class ImplBST<E extends Comparable<E>> implements arbol<E> {
 	}
 
 	
-	@Override
-	public Iterator<Nodo<E>> iterator() {
-	    return new BSTiterator();
-	}
+	
 
 	@Override
 	public void add(Comparable x) {
@@ -76,10 +85,21 @@ public class ImplBST<E extends Comparable<E>> implements arbol<E> {
 	}
 
 	@Override
-	public Nodo<E> search(E x) throws ElementoNoEncontrado {
-		// TODO Auto-generated method stub
-		return null;
+	public Nodo<E> search(E x) throws NoSuchElementException {
+	    Nodo<E> aux = raiz;
+	    while (aux != null) {
+	        int cmp = aux.dato.compareTo(x);
+	        if (cmp == 0) {
+	            return aux; // encontrado
+	        } else if (cmp > 0) {
+	            aux = aux.izq; // x es menor → ir a la izquierda
+	        } else {
+	            aux = aux.der; // x es mayor → ir a la derecha
+	        }
+	    }
+	    throw new NoSuchElementException("Elemento no encontrado");
 	}
+
 
 	
 }
