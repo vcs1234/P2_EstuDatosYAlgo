@@ -2,7 +2,9 @@ package eda.DS;
 
 import java.nio.channels.Pipe;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.NoSuchElementException;
+import java.util.Queue;
 import java.util.Stack;
 
 import eda.ADT.AVL.arbol;
@@ -32,12 +34,6 @@ public class ImplAVL<E extends Comparable<E>> implements arbol<E> {
 		    }
 		}
 
-		public Nodoa<E> getCurrent(){
-			return current;
-		}
-		
-		
-
 		@Override
 		public boolean hasNext() {
 			return !pila.isEmpty();//Si la pila está vacia quiere decir que ya no hay más elementos iterables
@@ -58,19 +54,14 @@ public class ImplAVL<E extends Comparable<E>> implements arbol<E> {
 	        }
 	        return nodo;
 	    }
-		
-		
 	}
-
-	
-	
-
 	@Override
-	public void add(E x) throws ElementoDuplicado{
+	public void add(E x) throws ElementoDuplicado, ArbolVacio{
 		if (raiz == null) {
 			raiz = new Nodoa<E>(x);
 		}else {
 			raiz.add(x);
+			Balanceartodo();
 		}
 	}
 
@@ -143,17 +134,45 @@ public class ImplAVL<E extends Comparable<E>> implements arbol<E> {
 		    } else {
 		        reemplazoPadre.der = reemplazo.der;
 		    }
-		}
-		}
-		
-		 
-	
-
+		}Balanceartodo();
+	}
 	@Override
 	public Nodoa<E> search(E x) throws NoSuchElementException {// pereza de cambiarlo por el método de nodos
 	    return raiz.search(x);
 	}
 
+	public void Balanceartodo() throws ArbolVacio {
+	    if (raiz == null) throw new ArbolVacio();
+	    //Problema anterior, estaba en que se balanceaba el nodo pero este no se volvía a introducir al arbol.
+	    raiz = raiz.balancear(); // ¡Primero asegúrate de reequilibrar y reasignar la raíz!
+	    
+	    Queue<Nodoa<E>> cola = new LinkedList<>();
+	    cola.add(raiz);
 
+	    while (!cola.isEmpty()) {
+	        Nodoa<E> actual = cola.poll();
+
+	        // Rebalanceamos hijos y los reasignamos al nodo actual
+	        if (actual.izq != null) {
+	            actual.izq = actual.izq.balancear();
+	            cola.add(actual.izq);
+	        }
+
+	        if (actual.der != null) {
+	            actual.der = actual.der.balancear();
+	            cola.add(actual.der);
+	        }
+	    }
+	}
 	
+	public void Mostrar() {
+		Iterator<Nodoa<E>> iter = iterator();
+		while (iter.hasNext()) {
+			Nodoa<E> actual = iter.next(); // ¡Avanzamos al siguiente nodo!
+			System.out.print(actual.getDato() + " ");
+		}
+		System.out.println(); // Salto de línea al final
+	}
+
+
 }

@@ -8,7 +8,7 @@ import eda.EXCEPTIONS.ElementoDuplicado;
 
 public class AVL {
 	public interface arbol<E extends Comparable<E>> extends Iterable<Nodoa<E>>{
-		void add( E x)throws ElementoDuplicado;
+		void add( E x)throws ElementoDuplicado, ArbolVacio;
 		Nodoa<E> max();
 		Nodoa<E> min();
 		void delete( E x)throws ArbolVacio;
