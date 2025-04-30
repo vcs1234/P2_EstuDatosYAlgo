@@ -30,7 +30,7 @@ public class ImplAVL<E extends Comparable<E>> implements arbol<E> {
 		public BSTiterator() { //Constructor o inicalizador del iterador.
 			while (current != null) {
 		        pila.push(current);
-		        current = current.izq;
+		        current = current.getIzq();
 		    }
 		}
 
@@ -46,11 +46,11 @@ public class ImplAVL<E extends Comparable<E>> implements arbol<E> {
 				//return null; Innecesario porque tenemos la excepción
 			}
 	        Nodoa<E> nodo = pila.pop();
-	        Nodoa<E> temp = nodo.der;
+	        Nodoa<E> temp = nodo.getDer();
 	        
 	        while (temp != null) {
 	            pila.push(temp);
-	            temp = temp.izq;
+	            temp = temp.getIzq();
 	        }
 	        return nodo;
 	    }
@@ -89,50 +89,50 @@ public class ImplAVL<E extends Comparable<E>> implements arbol<E> {
 				f = true;
 			}else if (com > 0) {
 				padre = atc;
-				atc = atc.der;
+				atc = atc.getDer();
 			}else {
 				padre = atc;
-				atc = atc.izq;
+				atc = atc.getIzq();
 			}
 		}
 		
-		if(atc.der == null && atc.izq == null) {
+		if(atc.getDer() == null && atc.getIzq() == null) {
 			if( atc == raiz){
 				raiz = null;
-			}else if (padre.izq == atc){
-				padre.izq = null;
+			}else if (padre.getIzq() == atc){
+				padre.setIzq(null);
 			}else {
-				padre.der = null;
+				padre.setDer(null);
 			}
 			
-		}else if (atc.der == null || atc.izq == null){
+		}else if (atc.getDer() == null || atc.getIzq() == null){
 			if( atc == raiz){
-				if (raiz.izq != null) {
-					raiz = raiz.izq;
+				if (raiz.getIzq() != null) {
+					raiz = raiz.getIzq();
 				}else {
-					raiz = raiz.der;
+					raiz = raiz.getDer();
 				}
-			}else if(atc.izq != null) {
-				atc = atc.izq;
+			}else if(atc.getIzq() != null) {
+				atc = atc.getIzq();
 			}else {
-				atc = atc.der;
+				atc = atc.getDer();
 			}
 		}else {//Tiene ambas ramas como ihos.Cogemos el minimo del derecho.
 			Nodoa<E> reemplazoPadre = atc;
-		    Nodoa<E> reemplazo = atc.der;
+		    Nodoa<E> reemplazo = atc.getDer();
 
-		    while (reemplazo.izq != null) {
+		    while (reemplazo.getIzq() != null) {
 		        reemplazoPadre = reemplazo;
-		        reemplazo = reemplazo.izq;
+		        reemplazo = reemplazo.getIzq();
 		    }
 
 		    atc.setDato(reemplazo.getDato()); // Copiamos el dato del reemplazo al nodo actual
 
 		    // Eliminamos el nodo reemplazo ajustando el hijo izquierdo del padre del reemplazo
-		    if (reemplazoPadre.izq == reemplazo) {
-		        reemplazoPadre.izq  = reemplazo.der; // puede tener hijo derecho
+		    if (reemplazoPadre.getIzq() == reemplazo) {
+		        reemplazoPadre.setIzq(reemplazo.getDer()); // puede tener hijo derecho
 		    } else {
-		        reemplazoPadre.der = reemplazo.der;
+		        reemplazoPadre.setDer(reemplazo.getDer());
 		    }
 		}Balanceartodo();
 	}
@@ -153,14 +153,14 @@ public class ImplAVL<E extends Comparable<E>> implements arbol<E> {
 	        Nodoa<E> actual = cola.poll();
 
 	        // Rebalanceamos hijos y los reasignamos al nodo actual
-	        if (actual.izq != null) {
-	            actual.izq = actual.izq.balancear();
-	            cola.add(actual.izq);
+	        if (actual.getIzq() != null) {
+	            actual.setIzq(actual.getIzq().balancear());
+	            cola.add(actual.getIzq());
 	        }
 
-	        if (actual.der != null) {
-	            actual.der = actual.der.balancear();
-	            cola.add(actual.der);
+	        if (actual.getDer() != null) {
+	            actual.setDer(actual.getDer().balancear());
+	            cola.add(actual.getDer());
 	        }
 	    }
 	}

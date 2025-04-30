@@ -6,7 +6,7 @@ import eda.EXCEPTIONS.ElementoDuplicado;
 
 public class Nodo<E extends Comparable<E>> {
 	private E dato;
-	
+	private Nodo<E> izq, der;
 	
 	
 	public E getDato() {
@@ -17,7 +17,24 @@ public class Nodo<E extends Comparable<E>> {
 		this.dato = dato;
 	}
 
-	public Nodo<E> izq, der;
+	
+	
+	public Nodo<E> getIzq() {
+		return izq;
+	}
+
+	public void setIzq(Nodo<E> izq) {
+		this.izq = izq;
+	}
+
+	public Nodo<E> getDer() {
+		return der;
+	}
+
+	public void setDer(Nodo<E> der) {
+		this.der = der;
+	}
+
 	public Nodo (E x) {
 		this.dato = x;
 		izq = null;

@@ -9,7 +9,7 @@ import eda.EXCEPTIONS.ElementoDuplicado;
 
 public class Nodoa<E extends Comparable<E>> {
 	private E dato;
-	
+	private Nodoa<E> izq, der;
 	
 	
 	public E getDato() {
@@ -20,7 +20,23 @@ public class Nodoa<E extends Comparable<E>> {
 		this.dato = dato;
 	}
 
-	public Nodoa<E> izq, der;
+	
+	public Nodoa<E> getIzq() {
+		return izq;
+	}
+
+	public void setIzq(Nodoa<E> izq) {
+		this.izq = izq;
+	}
+
+	public Nodoa<E> getDer() {
+		return der;
+	}
+
+	public void setDer(Nodoa<E> der) {
+		this.der = der;
+	}
+
 	public Nodoa (E x) {
 		this.dato = x;
 		izq = null;
