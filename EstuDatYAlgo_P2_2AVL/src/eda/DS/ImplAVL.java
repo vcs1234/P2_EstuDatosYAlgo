@@ -83,8 +83,7 @@ public class ImplAVL<E extends Comparable<E>> implements arbol<E> {
 		boolean f = false;
 		//Lo buscamos ahora que sabemos que existe.
 		while (f != true) {
-			int com = x.compareTo(atc.getDato()
-					);
+			int com = x.compareTo(atc.getDato());
 			if (com == 0) {
 				f = true;
 			}else if (com > 0) {

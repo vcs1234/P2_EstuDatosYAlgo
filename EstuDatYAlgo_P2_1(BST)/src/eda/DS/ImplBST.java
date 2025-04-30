@@ -143,14 +143,20 @@ public class ImplBST<E extends Comparable<E>> implements arbol<E> {
 		        reemplazoPadre.setDer(reemplazo.getDer());
 		    }
 		}
-		}
-		
-		 
+	}
 	
-
 	@Override
 	public Nodo<E> search(E x) throws NoSuchElementException {// pereza de cambiarlo por el método de nodos
 	    return raiz.search(x);
+	}
+	
+	public void Mostrar() {
+		Iterator<Nodo<E>> iter = iterator();
+		while (iter.hasNext()) {
+			Nodo<E> actual = iter.next(); // ¡Avanzamos al siguiente nodo!
+			System.out.print(actual.getDato() + " ");
+		}
+		System.out.println(); // Salto de línea al final
 	}
 
 

@@ -14,6 +14,7 @@ public class testABB {
 			 im.add(10);
 	         im.add(5);
 	         im.add(15);
+	         im.Mostrar();
 			
 			System.out.println("El elemento maximo es "+ im.max().getDato());
 			System.out.println("El elemento mínimo es "+ im.min().getDato());
@@ -21,6 +22,7 @@ public class testABB {
 			System.out.println("Buscamos el 5" + im.search(5).getDato());
 			 im.delete(10);
 	         System.out.println("Eliminado 10. Nuevo raíz (mínimo): " + im.min().getDato());
+	         im.Mostrar();
 			
 		} catch (ElementoDuplicado | ArbolVacio e) {
             System.out.println("Error: " + e.getMessage());

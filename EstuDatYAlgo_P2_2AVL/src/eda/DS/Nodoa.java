@@ -11,7 +11,6 @@ public class Nodoa<E extends Comparable<E>> {
 	private E dato;
 	private Nodoa<E> izq, der;
 	
-	
 	public E getDato() {
 		return dato;
 	}
